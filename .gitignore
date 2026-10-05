@@ -1,0 +1,20 @@
+# Secrets - IMPORTANT
+**/application-dev.properties
+**/application.properties
+**/*.env
+.env
+
+# Build outputs
+node_modules/
+target/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+*.log

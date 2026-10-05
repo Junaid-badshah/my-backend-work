@@ -1,0 +1,30 @@
+package com.example.book.demo.config;
+
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+
+import java.util.concurrent.TimeUnit;
+
+@Configuration
+@EnableCaching
+@Profile("caffeine")
+public class CaffeineCacheConfig {
+
+    @Bean
+    @Primary
+    public CacheManager cacheManager() {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("books", "authors");
+        cacheManager.setCaffeine(Caffeine.newBuilder()
+                .initialCapacity(100)
+                .maximumSize(1000)
+                .expireAfterWrite(10, TimeUnit.MINUTES)
+                .recordStats());
+        return cacheManager;
+    }
+}
